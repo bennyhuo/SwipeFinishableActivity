@@ -3,7 +3,7 @@
     package="net.println.swipefinishableactivity.sample" >
 
     <application
-        android:name="net.println.swipefinishableactivity.SwipableSupportedApplication"
+        android:name=".DemoApplication"
         android:allowBackup="true"
         android:configChanges="orientation"
         android:icon="@mipmap/ic_launcher"
