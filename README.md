@@ -91,7 +91,7 @@ Done!Hope you enjoy it ~
   ```
 
 2. ActionBar is not supported and I don't have any plan to work on it. You can just implement an action bar in your own layout.
-3. If the theme of the LauncherActivity of your app applied is **Transluent**, the **Recent Activities**(You can see this when you press the **OverView** button besides **Home** button) may looks weird on Google Nexus 6[6.0.1]. This may relate to some bugs in Android System itself, but you can use a non-translucent Activty to avoid this problem.
+3. If the theme of the LauncherActivity of your app applied is **Translucent**, the **Recent Activities**(You can see this when you press the **OverView** button besides **Home** button) may looks weird on Google Nexus 6[6.0.1]. This may relate to some bugs in Android System itself, but you can use a non-translucent Activty to avoid this problem.
 
 	![](arts/bugs_in_recents.gif)
 
