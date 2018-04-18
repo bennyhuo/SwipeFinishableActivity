@@ -17,7 +17,7 @@ This library can help you build an Android project with an iOS Navigation Pages 
 	    @Override
 	    public void onCreate() {
 	        super.onCreate();
-	        ActivityController.INSTANCE.onCreate(this);
+	        SwipeFinishable.INSTANCE.onCreate(this);
 	    }
 	}
 	```
