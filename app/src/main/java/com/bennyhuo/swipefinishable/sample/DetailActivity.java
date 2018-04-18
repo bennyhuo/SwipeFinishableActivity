@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.bennyhuo.swipefinishable.SwipeFinishable;
-import com.bennyhuo.swipefinishable.SwipeFinishable.SwipableActivity;
+import com.bennyhuo.swipefinishable.SwipeFinishable.SwipeFinishableActivity;
 import com.bennyhuo.swipefinishable.SwipeFinishablePlugin;
 
 /**
@@ -15,7 +15,7 @@ import com.bennyhuo.swipefinishable.SwipeFinishablePlugin;
  *
  * You can simply extend BaseSwipeFinishableActivity for convenience.
  */
-public class DetailActivity extends Activity implements SwipableActivity {
+public class DetailActivity extends Activity implements SwipeFinishableActivity {
     public static final String TAG = "DetailActivity";
 
     public static final String TITLE = "title";

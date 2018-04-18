@@ -21,10 +21,10 @@ This library can help you build an Android project with an iOS Navigation Pages 
 	    }
 	}
 	```
-2. Create your Activities implementing ```SwipeActivity```, and handle the lifecycle of ```SwipeFinishablePlugin```. You can refer to ```DetailActivity``` to work on your own or just simply extend ```BaseSwipeFinishableActivity```.
+2. Create your Activities implementing ```SwipeFinishableActivity```, and handle the lifecycle of ```SwipeFinishablePlugin```. You can refer to ```DetailActivity``` to work on your own or just simply extend ```BaseSwipeFinishableActivity```.
 
 	```java
-	public class DetailActivity extends Activity implements SwipableActivity {
+	public class DetailActivity extends Activity implements SwipeFinishableActivity {
 	    public static final String TAG = "DetailActivity";
 	
 	    public static final String TITLE = "title";

@@ -15,7 +15,7 @@ public class SwipeFinishablePlugin {
     private ActivityRootLayout activityRootLayout;
 
     public SwipeFinishablePlugin(Activity swipableActivity) {
-        if(swipableActivity instanceof SwipeFinishable.SwipableActivity) {
+        if(swipableActivity instanceof SwipeFinishable.SwipeFinishableActivity) {
             this.swipableActivity = swipableActivity;
         }else{
             throw new UnsupportedOperationException("Activity passed in is not a instance of SwipeActivity.");
@@ -90,6 +90,6 @@ public class SwipeFinishablePlugin {
     }
 
     void finishThisActivity(){
-        ((SwipeFinishable.SwipableActivity) swipableActivity).finishThisActivity();
+        ((SwipeFinishable.SwipeFinishableActivity) swipableActivity).finishThisActivity();
     }
 }
