@@ -69,7 +69,7 @@ This library can help you build an Android project with an iOS Navigation Pages 
 	
 	    @Override
 	    public void finish() {
-	        ActivityController.INSTANCE.finishCurrentActivity();
+	        SwipeFinishable.INSTANCE.finishCurrentActivity();
 	    }
 	}
 
@@ -84,7 +84,7 @@ Done!Hope you enjoy it ~
 
 # Known Issues
 
-1. Since we have no official access to the Activity Task Stack, any recreation of activities may affect the order of the stack we maintained in the ActivityController. For example, if your app supports arbitrary orientations, you should add this configuration to any of your activities in the manifest:
+1. Since we have no official access to the Activity Task Stack, any recreation of activities may affect the order of the stack we maintained in the SwipeFinishable. For example, if your app supports arbitrary orientations, you should add this configuration to any of your activities in the manifest:
 
   ``` xml
   android:configChanges="orientation"

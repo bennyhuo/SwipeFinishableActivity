@@ -1,4 +1,4 @@
-package com.bennyhuo.swipefinishableactivity;
+package com.bennyhuo.swipefinishable;
 
 import android.view.MotionEvent;
 

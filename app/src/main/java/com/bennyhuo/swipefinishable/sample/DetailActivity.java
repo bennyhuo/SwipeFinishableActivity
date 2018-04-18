@@ -1,4 +1,4 @@
-package com.bennyhuo.swipefinishableactivity.sample;
+package com.bennyhuo.swipefinishable.sample;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
 
-import com.bennyhuo.swipefinishableactivity.ActivityController;
-import com.bennyhuo.swipefinishableactivity.ActivityController.SwipableActivity;
-import com.bennyhuo.swipefinishableactivity.SwipeFinishablePlugin;
+import com.bennyhuo.swipefinishable.SwipeFinishable;
+import com.bennyhuo.swipefinishable.SwipeFinishable.SwipableActivity;
+import com.bennyhuo.swipefinishable.SwipeFinishablePlugin;
 
 /**
  * Created by benny on 9/24/16.
@@ -67,6 +67,6 @@ public class DetailActivity extends Activity implements SwipableActivity {
 
     @Override
     public void finish() {
-        ActivityController.INSTANCE.finishCurrentActivity();
+        SwipeFinishable.INSTANCE.finishCurrentActivity();
     }
 }

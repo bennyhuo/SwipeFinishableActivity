@@ -29,3 +29,20 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     testCompile 'junit:junit:4.12'
 }
+
+//region bintray
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+    userOrg = project.userName
+    groupId = project.groupId
+    repoName = project.repoName
+    artifactId = 'swipefinishable'
+    publishVersion = project.publishVersion
+    desc = project.desc//描述，不重要
+    website = project.website
+    bintrayUser = project.userName
+    bintrayKey = project.apiKey
+    dryRun = project.dryRun
+}
+//endregion

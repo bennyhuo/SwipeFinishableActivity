@@ -1,8 +1,8 @@
-package com.bennyhuo.swipefinishableactivity.sample;
+package com.bennyhuo.swipefinishable.sample;
 
 import android.app.Application;
 
-import com.bennyhuo.swipefinishableactivity.ActivityController;
+import com.bennyhuo.swipefinishable.SwipeFinishable;
 
 /**
  * Created by benny on 9/24/16.
@@ -13,6 +13,6 @@ public class DemoApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ActivityController.INSTANCE.onCreate(this);
+        SwipeFinishable.INSTANCE.onCreate(this);
     }
 }

@@ -1,4 +1,4 @@
-package com.bennyhuo.swipefinishableactivity;
+package com.bennyhuo.swipefinishable;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -16,7 +16,7 @@ import android.view.VelocityTracker;
 import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.animation.Interpolator;
 
-import com.bennyhuo.swipefinishableactivity.utils.DensityUtil;
+import com.bennyhuo.swipefinishable.utils.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -24,7 +24,7 @@ import java.util.Stack;
 /**
  * Created by benny on 9/17/16.
  */
-public final class ActivityController  {
+public final class SwipeFinishable {
     public static final String TAG = "ActivityController";
 
     private static final int Y_THRESHOLD = 10;
@@ -33,7 +33,7 @@ public final class ActivityController  {
     private static final long MAX_DURATION =500;
     private static final long MIN_DURATION =100;
 
-    public final static ActivityController INSTANCE = new ActivityController();
+    public final static SwipeFinishable INSTANCE = new SwipeFinishable();
 
     private boolean swipeLastActivity = true;
     private VelocityTracker velocityTracker;
@@ -43,7 +43,7 @@ public final class ActivityController  {
 
     private Application application;
 
-    private ActivityController(){
+    private SwipeFinishable(){
 
     }
 

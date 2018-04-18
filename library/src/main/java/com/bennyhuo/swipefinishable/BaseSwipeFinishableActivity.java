@@ -1,4 +1,4 @@
-package com.bennyhuo.swipefinishableactivity;
+package com.bennyhuo.swipefinishable;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 /**
  * Created by benny on 9/19/16.
  */
-public abstract class BaseSwipeFinishableActivity extends Activity implements ActivityController.SwipableActivity{
+public abstract class BaseSwipeFinishableActivity extends Activity implements SwipeFinishable.SwipableActivity{
     public static final String TAG = "BaseSwipeFinishableActivity";
 
     private SwipeFinishablePlugin swipeFinishablePlugin = new SwipeFinishablePlugin(this);

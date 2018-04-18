@@ -1,4 +1,4 @@
-package com.bennyhuo.swipefinishableactivity;
+package com.bennyhuo.swipefinishable;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

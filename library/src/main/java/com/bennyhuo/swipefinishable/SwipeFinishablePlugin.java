@@ -1,4 +1,4 @@
-package com.bennyhuo.swipefinishableactivity;
+package com.bennyhuo.swipefinishable;
 
 import android.app.Activity;
 import android.util.Log;
@@ -15,7 +15,7 @@ public class SwipeFinishablePlugin {
     private ActivityRootLayout activityRootLayout;
 
     public SwipeFinishablePlugin(Activity swipableActivity) {
-        if(swipableActivity instanceof ActivityController.SwipableActivity) {
+        if(swipableActivity instanceof SwipeFinishable.SwipableActivity) {
             this.swipableActivity = swipableActivity;
         }else{
             throw new UnsupportedOperationException("Activity passed in is not a instance of SwipeActivity.");
@@ -86,10 +86,10 @@ public class SwipeFinishablePlugin {
     }
 
     public void finish() {
-        ActivityController.INSTANCE.finishCurrentActivity();
+        SwipeFinishable.INSTANCE.finishCurrentActivity();
     }
 
     void finishThisActivity(){
-        ((ActivityController.SwipableActivity) swipableActivity).finishThisActivity();
+        ((SwipeFinishable.SwipableActivity) swipableActivity).finishThisActivity();
     }
 }

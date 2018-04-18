@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.novoda:bintray-release:0.7.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -20,4 +21,18 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+def props = new Properties()
+file("jcenter.properties").withInputStream { props.load(it) }
+
+ext {
+    userName = props.getProperty("bintray.user")
+    apiKey = props.getProperty("bintray.key")
+    repoName = "bennyhuo"
+    groupId = 'com.bennyhuo.swipefinishable'
+    publishVersion = "1.0-beta"
+    desc = ""
+    website = 'https://github.com/enbandari/SwipeFinishableActivity'
+    dryRun = "false"
 }

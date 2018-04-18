@@ -1,4 +1,4 @@
-package com.bennyhuo.swipefinishableactivity.sample;
+package com.bennyhuo.swipefinishable.sample;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.bennyhuo.swipefinishableactivity.ActivityController;
+import com.bennyhuo.swipefinishable.SwipeFinishable;
 
 public class MainActivity extends Activity {
 
@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                 intent.putExtra(DetailActivity.TITLE, adapter.getItem(position));
-                ActivityController.INSTANCE.startActivity(intent);
+                SwipeFinishable.INSTANCE.startActivity(intent);
             }
         });
     }

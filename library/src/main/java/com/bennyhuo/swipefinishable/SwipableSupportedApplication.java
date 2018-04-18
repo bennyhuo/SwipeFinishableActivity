@@ -1,4 +1,4 @@
-package com.bennyhuo.swipefinishableactivity;
+package com.bennyhuo.swipefinishable;
 
 import android.app.Application;
 
@@ -11,6 +11,6 @@ public class SwipableSupportedApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        ActivityController.INSTANCE.onCreate(this);
+        SwipeFinishable.INSTANCE.onCreate(this);
     }
 }

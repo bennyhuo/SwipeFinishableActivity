@@ -1,4 +1,4 @@
-package com.bennyhuo.swipefinishableactivity;
+package com.bennyhuo.swipefinishable;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
-import com.bennyhuo.swipefinishableactivity.ActivityController.State;
+import com.bennyhuo.swipefinishable.SwipeFinishable.State;
 
 
 /**
@@ -40,25 +40,25 @@ public class ActivityRootLayout extends FrameLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        ActivityController.INSTANCE.dispatchTouchEvent(ev);
+        SwipeFinishable.INSTANCE.dispatchTouchEvent(ev);
         super.dispatchTouchEvent(ev);
         return true;
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return ActivityController.INSTANCE.shouldInterceptTouchEvent(ev) || super.onInterceptTouchEvent(ev);
+        return SwipeFinishable.INSTANCE.shouldInterceptTouchEvent(ev) || super.onInterceptTouchEvent(ev);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return ActivityController.INSTANCE.onTouchEvent(event) || super.onTouchEvent(event);
+        return SwipeFinishable.INSTANCE.onTouchEvent(event) || super.onTouchEvent(event);
     }
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
-        if (isAtTop && ActivityController.INSTANCE.getState() != State.IDLE) {
+        if (isAtTop && SwipeFinishable.INSTANCE.getState() != State.IDLE) {
             drawShadow(canvas);
             drawCover(canvas);
         }

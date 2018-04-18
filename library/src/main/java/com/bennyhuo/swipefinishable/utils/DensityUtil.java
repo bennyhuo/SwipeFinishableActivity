@@ -1,4 +1,4 @@
-package com.bennyhuo.swipefinishableactivity.utils;
+package com.bennyhuo.swipefinishable.utils;
 
 import android.content.Context;
 
