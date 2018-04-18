@@ -13,7 +13,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
-import android.view.ViewTreeObserver.OnPreDrawListener;
+import android.view.View;
 import android.view.animation.Interpolator;
 
 import com.bennyhuo.swipefinishable.utils.DensityUtil;
@@ -179,37 +179,37 @@ public final class SwipeFinishable {
         public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
             activities.push(activity);
             Log.d(TAG, "onActivityCreated() called with: activity = [" + activity + "], savedInstanceState = [" + savedInstanceState + "]");
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if(bindView()){
-                        final SwipeFinishablePlugin baseActivity = ((SwipeFinishableActivity)getCurrentActivity()).getSwipeFinishablePlugin();
-                        baseActivity.getDecorView().getViewTreeObserver().addOnPreDrawListener(new OnPreDrawListener() {
+            if (bindView()) {
+                final SwipeFinishablePlugin baseActivity = ((SwipeFinishableActivity) getCurrentActivity()).getSwipeFinishablePlugin();
+                baseActivity.onCreate();
+                baseActivity.getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                    @Override
+                    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                        baseActivity.setTranslationX(baseActivity.getWidth());
+                        final ObjectAnimator animator = ObjectAnimator.ofFloat(baseActivity, "translationX", baseActivity.getWidth(), 0);
+                        animator.addListener(new AnimatorListenerAdapter() {
                             @Override
-                            public boolean onPreDraw() {
-                                final ObjectAnimator animator = ObjectAnimator.ofFloat(baseActivity, "translationX", baseActivity.getWidth(), 0);
-                                animator.addListener(new AnimatorListenerAdapter() {
-                                    @Override
-                                    public void onAnimationEnd(Animator animation) {
-                                        super.onAnimationEnd(animation);
-                                        animator.removeListener(this);
-                                        setState(State.IDLE);
-                                    }
-                                });
-                                animator.start();
-                                setState(State.SETTLING);
-                                baseActivity.getDecorView().getViewTreeObserver().removeOnPreDrawListener(this);
-                                return false;
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                animator.removeListener(this);
+                                setState(State.IDLE);
                             }
                         });
+                        animator.start();
+                        setState(State.SETTLING);
+                        baseActivity.getDecorView().removeOnLayoutChangeListener(this);
                     }
-                }
-            });
+                });
+            }
         }
 
         @Override
         public void onActivityStarted(Activity activity) {
             Log.d(TAG, "onActivityStarted() called with: activity = [" + activity + "]");
+            if(activity instanceof SwipeFinishableActivity) {
+                final SwipeFinishablePlugin baseActivity = ((SwipeFinishableActivity) activity).getSwipeFinishablePlugin();
+                baseActivity.onStart();
+            }
         }
 
         @Override
@@ -225,6 +225,10 @@ public final class SwipeFinishable {
         @Override
         public void onActivityStopped(Activity activity) {
             Log.d(TAG, "onActivityStopped() called with: activity = [" + activity + "]");
+            if(activity instanceof SwipeFinishableActivity) {
+                final SwipeFinishablePlugin baseActivity = ((SwipeFinishableActivity) activity).getSwipeFinishablePlugin();
+                baseActivity.onStop();
+            }
         }
 
         @Override
@@ -287,7 +291,7 @@ public final class SwipeFinishable {
         }
     }
 
-    public void onCreate(Application application) {
+    public void init(Application application) {
         this.application = application;
         addTouchEventInterceptor(interceptor);
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks);

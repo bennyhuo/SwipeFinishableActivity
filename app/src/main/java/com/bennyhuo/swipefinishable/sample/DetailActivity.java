@@ -26,7 +26,6 @@ public class DetailActivity extends Activity implements SwipeFinishableActivity 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        plugin.onCreate();
         TextView titleView = (TextView) findViewById(R.id.title);
         Intent intent = getIntent();
         if(intent != null){
@@ -35,24 +34,6 @@ public class DetailActivity extends Activity implements SwipeFinishableActivity 
                 titleView.setText(title);
             }
         }
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        plugin.onPostCreate();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        plugin.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        plugin.onStop();
     }
 
     @Override

@@ -17,7 +17,7 @@ This library can help you build an Android project with an iOS Navigation Pages 
 	    @Override
 	    public void onCreate() {
 	        super.onCreate();
-	        SwipeFinishable.INSTANCE.onCreate(this);
+	        SwipeFinishable.INSTANCE.init(this);
 	    }
 	}
 	```
@@ -35,26 +35,7 @@ This library can help you build an Android project with an iOS Navigation Pages 
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.activity_detail);
-	        plugin.onCreate();
 			 ...
-	    }
-	
-	    @Override
-	    protected void onPostCreate(Bundle savedInstanceState) {
-	        super.onPostCreate(savedInstanceState);
-	        plugin.onPostCreate();
-	    }
-	
-	    @Override
-	    protected void onStart() {
-	        super.onStart();
-	        plugin.onStart();
-	    }
-	
-	    @Override
-	    protected void onStop() {
-	        super.onStop();
-	        plugin.onStop();
 	    }
 	
 	    @Override

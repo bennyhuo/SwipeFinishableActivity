@@ -2,6 +2,7 @@ package com.bennyhuo.swipefinishable;
 
 import android.app.Activity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -55,33 +56,45 @@ public class SwipeFinishablePlugin {
         return getDecorView().getWidth();
     }
 
-    public void onCreate(){
+    void onCreate(){
         activityRootLayout = new ActivityRootLayout(swipableActivity);
+        addBackgroundView();
     }
 
-    public void onPostCreate(){
+    private void addBackgroundView(){
+        View backgroundView = new View(swipableActivity);
+        TypedValue typedValue = new TypedValue();
+        swipableActivity.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        int color = typedValue.data;
+        backgroundView.setBackgroundColor(color);
+        activityRootLayout.addView(backgroundView, -1, -1);
+    }
+
+    private void setupLayout(){
         ViewGroup rootView = (ViewGroup) swipableActivity.getWindow().getDecorView().findViewById(android.R.id.content);
         if(activityRootLayout.getParent() == rootView) {
-            Log.d(TAG, "onPostCreate() called, in layout.");
+            Log.d(TAG, "setupLayout() called, in layout.");
         }else {
             View[] children = new View[rootView.getChildCount()];
-            Log.d(TAG, "onPostCreate() called = " + rootView.getChildCount());
+            Log.d(TAG, "setupLayout() called = " + rootView.getChildCount());
             for (int i = 0; i < rootView.getChildCount(); i++) {
                 children[i] = rootView.getChildAt(i);
             }
             rootView.removeAllViews();
             rootView.addView(activityRootLayout, -1, -1);
+
             for (View child : children) {
                 activityRootLayout.addView(child);
             }
         }
     }
 
-    public void onStart() {
+    void onStart() {
+        setupLayout();
         getDecorView().setAtTop(true);
     }
 
-    public void onStop() {
+    void onStop() {
         getDecorView().setAtTop(false);
     }
 

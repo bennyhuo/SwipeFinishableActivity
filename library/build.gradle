@@ -3,6 +3,7 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 23
     buildToolsVersion '27.0.3'
+    compileOptions.encoding = "UTF-8"
 
     defaultConfig {
         minSdkVersion 14
@@ -39,6 +40,9 @@ task sourcesJar(type: Jar) {
 task javadoc(type: Javadoc) {
     failOnError  false
     options.encoding = 'UTF-8'
+    options.docEncoding "UTF-8"
+    options.charSet "UTF-8"
+
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.compile

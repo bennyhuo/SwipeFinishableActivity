@@ -12,27 +12,8 @@ public abstract class BaseSwipeFinishableActivity extends Activity implements Sw
     private SwipeFinishablePlugin swipeFinishablePlugin = new SwipeFinishablePlugin(this);
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        swipeFinishablePlugin.onCreate();
-    }
-
-    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        swipeFinishablePlugin.onPostCreate();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        swipeFinishablePlugin.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        swipeFinishablePlugin.onStop();
     }
 
     @Override

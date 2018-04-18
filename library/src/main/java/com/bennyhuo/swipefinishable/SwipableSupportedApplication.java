@@ -11,6 +11,6 @@ public class SwipableSupportedApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        SwipeFinishable.INSTANCE.onCreate(this);
+        SwipeFinishable.INSTANCE.init(this);
     }
 }
