@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 /**
  * Created by benny on 9/22/16.
  */
-public class SwipeFinishablePlugin {
-    public static final String TAG = "SwipeFinishablePlugin";
+class SwipeFinishablePlugin {
+    private static final String TAG = "SwipeFinishablePlugin";
 
     private Activity swipableActivity;
     private ActivityRootLayout activityRootLayout;
 
-    public SwipeFinishablePlugin(Activity swipableActivity) {
+    SwipeFinishablePlugin(Activity swipableActivity) {
         if(swipableActivity instanceof SwipeFinishable.SwipeFinishableActivity) {
             this.swipableActivity = swipableActivity;
         }else{
@@ -23,7 +23,7 @@ public class SwipeFinishablePlugin {
         }
     }
 
-    public ActivityRootLayout getDecorView(){
+    ActivityRootLayout getDecorView(){
         return activityRootLayout;
     }
 
@@ -34,11 +34,11 @@ public class SwipeFinishablePlugin {
 
     private OnTranslationUpdateListener onTranslationUpdateListener;
 
-    public void setOnTranslationUpdateListener(OnTranslationUpdateListener onTranslationUpdateListener){
+    void setOnTranslationUpdateListener(OnTranslationUpdateListener onTranslationUpdateListener){
         this.onTranslationUpdateListener = onTranslationUpdateListener;
     }
 
-    public void setTranslationX(float translationX){
+    void setTranslationX(float translationX){
         if(this.onTranslationUpdateListener != null){
             this.onTranslationUpdateListener.onUpdate(translationX);
         }
@@ -48,11 +48,11 @@ public class SwipeFinishablePlugin {
         getDecorView().invalidate();
     }
 
-    public float getTranslationX(){
+    float getTranslationX(){
         return getDecorView().getOffset();
     }
 
-    public int getWidth(){
+    int getWidth(){
         return getDecorView().getWidth();
     }
 
@@ -96,10 +96,6 @@ public class SwipeFinishablePlugin {
 
     void onStop() {
         getDecorView().setAtTop(false);
-    }
-
-    public void finish() {
-        SwipeFinishable.INSTANCE.finishCurrentActivity();
     }
 
     void finishThisActivity(){

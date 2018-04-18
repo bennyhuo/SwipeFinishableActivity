@@ -8,8 +8,6 @@ import android.app.Application;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -19,6 +17,7 @@ import android.view.animation.Interpolator;
 import com.bennyhuo.swipefinishable.utils.DensityUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 /**
@@ -38,8 +37,7 @@ public final class SwipeFinishable {
     private boolean swipeLastActivity = true;
     private VelocityTracker velocityTracker;
     private Stack<Activity> activities = new Stack<>();
-
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private HashMap<Activity, SwipeFinishablePlugin> pluginMap = new HashMap<>();
 
     private Application application;
 
@@ -48,8 +46,6 @@ public final class SwipeFinishable {
     }
 
     public interface SwipeFinishableActivity {
-        SwipeFinishablePlugin getSwipeFinishablePlugin();
-
         void finishThisActivity();
     }
 
@@ -61,7 +57,7 @@ public final class SwipeFinishable {
 
     private State state = State.IDLE;
 
-    void setState(State state){
+    private void setState(State state){
         if(this.state == state) return ;
         this.state = state;
     }
@@ -87,10 +83,7 @@ public final class SwipeFinishable {
                     case MotionEvent.ACTION_DOWN:
                         downX = event.getRawX();
                         downY = event.getRawY();
-                        isAbandon = false;
-                        if (downX > DensityUtil.dip2px(application, X_EVENT_AREA)) {
-                            isAbandon = true;
-                        }
+                        isAbandon = downX > DensityUtil.dip2px(application, X_EVENT_AREA);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         float cx = event.getRawX();
@@ -116,7 +109,7 @@ public final class SwipeFinishable {
         public boolean onTouch(MotionEvent event) {
             if(state == State.DRAGGING) {
                 recordEvent(event);
-                SwipeFinishablePlugin swipeFinishablePlugin = ((SwipeFinishableActivity) getCurrentActivity()).getSwipeFinishablePlugin();
+                SwipeFinishablePlugin swipeFinishablePlugin = pluginMap.get(getCurrentActivity());
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_MOVE:
                         float cx = event.getRawX();
@@ -179,8 +172,15 @@ public final class SwipeFinishable {
         public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
             activities.push(activity);
             Log.d(TAG, "onActivityCreated() called with: activity = [" + activity + "], savedInstanceState = [" + savedInstanceState + "]");
+
+            Activity currentActivity = getCurrentActivity();
+            if(currentActivity instanceof SwipeFinishableActivity) {
+                final SwipeFinishablePlugin baseActivity = new SwipeFinishablePlugin(currentActivity);
+                pluginMap.put(currentActivity, baseActivity);
+            }
+
             if (bindView()) {
-                final SwipeFinishablePlugin baseActivity = ((SwipeFinishableActivity) getCurrentActivity()).getSwipeFinishablePlugin();
+                final SwipeFinishablePlugin baseActivity = pluginMap.get(currentActivity);
                 baseActivity.onCreate();
                 baseActivity.getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                     @Override
@@ -207,7 +207,7 @@ public final class SwipeFinishable {
         public void onActivityStarted(Activity activity) {
             Log.d(TAG, "onActivityStarted() called with: activity = [" + activity + "]");
             if(activity instanceof SwipeFinishableActivity) {
-                final SwipeFinishablePlugin baseActivity = ((SwipeFinishableActivity) activity).getSwipeFinishablePlugin();
+                final SwipeFinishablePlugin baseActivity = pluginMap.get(activity);
                 baseActivity.onStart();
             }
         }
@@ -226,7 +226,7 @@ public final class SwipeFinishable {
         public void onActivityStopped(Activity activity) {
             Log.d(TAG, "onActivityStopped() called with: activity = [" + activity + "]");
             if(activity instanceof SwipeFinishableActivity) {
-                final SwipeFinishablePlugin baseActivity = ((SwipeFinishableActivity) activity).getSwipeFinishablePlugin();
+                final SwipeFinishablePlugin baseActivity = pluginMap.get(activity);
                 baseActivity.onStop();
             }
         }
@@ -239,6 +239,7 @@ public final class SwipeFinishable {
         @Override
         public void onActivityDestroyed(Activity activity) {
             activities.remove(activity);
+            pluginMap.remove(activity);
             Log.d(TAG, "onActivityDestroyed() called with: activity = [" + activity + "]");
             bindView();
         }
@@ -248,7 +249,7 @@ public final class SwipeFinishable {
         Activity activity = getCurrentActivity();
         final SwipeFinishablePlugin currentPlugin;
         if(activity != null && activity instanceof SwipeFinishableActivity) {
-            currentPlugin = ((SwipeFinishableActivity) activity).getSwipeFinishablePlugin();
+            currentPlugin = pluginMap.get(activity);
             currentPlugin.setOnTranslationUpdateListener(null);
         }else{
             return false;
@@ -258,7 +259,7 @@ public final class SwipeFinishable {
             return false;
         }
         if(activity instanceof SwipeFinishableActivity) {
-            SwipeFinishablePlugin groundPlugin = ((SwipeFinishableActivity) activity).getSwipeFinishablePlugin();
+            SwipeFinishablePlugin groundPlugin = pluginMap.get(activity);
             groundPlugin.setOnTranslationUpdateListener(null);
             if(currentPlugin == groundPlugin) return false;
         }
@@ -267,7 +268,7 @@ public final class SwipeFinishable {
             @Override
             public void onUpdate(float translationX) {
                 if(groundActivity instanceof SwipeFinishableActivity) {
-                    ((SwipeFinishableActivity)groundActivity).getSwipeFinishablePlugin().setTranslationX(0.5f * (translationX - currentPlugin.getWidth()));
+                    pluginMap.get(groundActivity).setTranslationX(0.5f * (translationX - currentPlugin.getWidth()));
                 }else{
                     groundActivity.getWindow().getDecorView().setTranslationX(0.5f * (translationX - currentPlugin.getWidth()));
                 }
@@ -310,7 +311,7 @@ public final class SwipeFinishable {
             return;
         }
 
-        final SwipeFinishablePlugin swipeFinishablePlugin = ((SwipeFinishableActivity) activity).getSwipeFinishablePlugin();
+        final SwipeFinishablePlugin swipeFinishablePlugin = pluginMap.get(activity);
         if(!swipeLastActivity && activities.size() == 1){
             /* >benny: [16-09-17 23:19] Only one left, finish it without transition. */
             swipeFinishablePlugin.finishThisActivity();
@@ -345,7 +346,7 @@ public final class SwipeFinishable {
         if(!(activity instanceof SwipeFinishableActivity)){
             return;
         }
-        SwipeFinishablePlugin swipeFinishablePlugin = ((SwipeFinishableActivity) getCurrentActivity()).getSwipeFinishablePlugin();
+        SwipeFinishablePlugin swipeFinishablePlugin = pluginMap.get(getCurrentActivity());
         final ObjectAnimator animator = ObjectAnimator.ofFloat(swipeFinishablePlugin, "translationX", swipeFinishablePlugin.getTranslationX(), 0);
         long duration = Math.max(Math.min((long) Math.abs(swipeFinishablePlugin.getTranslationX() * 2 / velocityX), MAX_DURATION), MIN_DURATION);
         animator.setDuration(duration);

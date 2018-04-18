@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.bennyhuo.swipefinishable.SwipeFinishable;
 import com.bennyhuo.swipefinishable.SwipeFinishable.SwipeFinishableActivity;
-import com.bennyhuo.swipefinishable.SwipeFinishablePlugin;
 
 /**
  * Created by benny on 9/24/16.
@@ -19,8 +18,6 @@ public class DetailActivity extends Activity implements SwipeFinishableActivity 
     public static final String TAG = "DetailActivity";
 
     public static final String TITLE = "title";
-
-    SwipeFinishablePlugin plugin = new SwipeFinishablePlugin(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +31,6 @@ public class DetailActivity extends Activity implements SwipeFinishableActivity 
                 titleView.setText(title);
             }
         }
-    }
-
-    @Override
-    public SwipeFinishablePlugin getSwipeFinishablePlugin() {
-        return plugin;
     }
 
     @Override

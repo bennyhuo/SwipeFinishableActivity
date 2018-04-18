@@ -18,12 +18,7 @@ public abstract class BaseSwipeFinishableActivity extends Activity implements Sw
 
     @Override
     public void finish() {
-        swipeFinishablePlugin.finish();
-    }
-
-    @Override
-    public SwipeFinishablePlugin getSwipeFinishablePlugin(){
-        return swipeFinishablePlugin;
+        SwipeFinishable.INSTANCE.finishCurrentActivity();
     }
 
     @Override
