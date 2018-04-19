@@ -37,6 +37,12 @@ task sourcesJar(type: Jar) {
     classifier = 'sources'
 }
 
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
 //task javadoc(type: Javadoc) {
 //    failOnError  false
 //    options.encoding = 'UTF-8'
