@@ -8,7 +8,13 @@ This library can help you build an Android project with an iOS Navigation Pages 
 
 # How to Use?
 
-1. Config application. You can use ```net.println.swipefinishableactivity.SwipableSupportedApplication``` directly in your AndroidManifest.xml. Customed application is also supported and easy to implement, if you want to extend other sub classes of Application. Just follow DempApplication, and create your own:
+0. Setup your dependencies in gradle:
+
+    ```
+     api "com.bennyhuo.swipefinishable:swipefinishable:1.0-rc"
+    ```
+
+1. Config application. You can use ```com.bennyhuo.swipefinishable.SwipableSupportedApplication``` directly in your AndroidManifest.xml. Customized application is also supported and easy to implement, if you want to extend other sub classes of Application. Just follow DemoApplication, and create your own:
 
 	```java
 	public class DemoApplication extends Application {
@@ -21,28 +27,11 @@ This library can help you build an Android project with an iOS Navigation Pages 
 	    }
 	}
 	```
-2. Create your Activities implementing ```SwipeFinishableActivity```, and handle the lifecycle of ```SwipeFinishablePlugin```. You can refer to ```DetailActivity``` to work on your own or just simply extend ```BaseSwipeFinishableActivity```.
+2. Create your Activities implementing ```SwipeFinishableActivity```. All you need to do is overriding method `finish` and implementing `finishThisActivity`. You can refer to ```DetailActivity``` to work on your own or just simply extend ```BaseSwipeFinishableActivity```.
 
 	```java
 	public class DetailActivity extends Activity implements SwipeFinishableActivity {
-	    public static final String TAG = "DetailActivity";
-	
-	    public static final String TITLE = "title";
-	
-	    SwipeFinishablePlugin plugin = new SwipeFinishablePlugin(this);
-	
-	    @Override
-	    protected void onCreate(Bundle savedInstanceState) {
-	        super.onCreate(savedInstanceState);
-	        setContentView(R.layout.activity_detail);
-			 ...
-	    }
-	
-	    @Override
-	    public SwipeFinishablePlugin getSwipeFinishablePlugin() {
-	        return plugin;
-	    }
-	
+
 	    @Override
 	    public void finishThisActivity() {
 	        super.finish();
@@ -61,15 +50,18 @@ This library can help you build an Android project with an iOS Navigation Pages 
 	<activity android:name=".DetailActivity" android:configChanges="orientation" android:theme="@style/AppTranslucentTheme"/>
 	```
 	
+	>Tips: If you apply your theme in code via the method `Activity.setTheme`, you will miss the support of ActivityRecord, i.e. you can't see the last Activity when swiping the current one.
+	
+4. Navigate to `SwipeFinishableActivity` with `SwipeFinishable.INSTANCE.startActivity(intent);` or call `Activity.overridePendingTransition(0, 0)` after starting the Activity directly.
+	
 Done!Hope you enjoy it ~
 
 # Known Issues
 
 1. Since we have no official access to the Activity Task Stack, any recreation of activities may affect the order of the stack we maintained in the SwipeFinishable. For example, if your app supports arbitrary orientations, you should add this configuration to any of your activities in the manifest:
-
-  ``` xml
-  android:configChanges="orientation"
-  ```
+      ``` xml
+      android:configChanges="orientation"
+      ```
 
 2. ActionBar is not supported and I don't have any plan to work on it. You can just implement an action bar in your own layout.
 3. If the theme of the LauncherActivity of your app applied is **Translucent**, the **Recent Activities**(You can see this when you press the **OverView** button besides **Home** button) may looks weird on Google Nexus 6[6.0.1]. This may relate to some bugs in Android System itself, but you can use a non-translucent Activty to avoid this problem.
@@ -78,7 +70,7 @@ Done!Hope you enjoy it ~
 
 # Compatibility
 
-This project has been developed and tested on Samsung S6 [5.0.1] and Google Nexus 6 [6.0.1]. If you have any problems, create an issue and I will handle it as soon as possible.
+This project has been developed and tested on Samsung S6 [5.0.1], Google Nexus 6 [6.0.1] and HUAWEI P10[8.0.0]. If you have any problems, feel free to issue.
 
 
 
