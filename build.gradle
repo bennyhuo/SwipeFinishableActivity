@@ -33,7 +33,7 @@ ext {
     apiKey = props.getProperty("bintray.key")
     repoName = "bennyhuo"
     groupId = 'com.bennyhuo.swipefinishable'
-    publishVersion = "1.0-rc"
+    publishVersion = "1.0-rc1"
     desc = ""
     website = 'https://github.com/enbandari/SwipeFinishableActivity'
     dryRun = "false"

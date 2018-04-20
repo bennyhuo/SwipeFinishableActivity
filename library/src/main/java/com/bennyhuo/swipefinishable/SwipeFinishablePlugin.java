@@ -64,7 +64,7 @@ class SwipeFinishablePlugin {
     private void addBackgroundView(){
         View backgroundView = new View(swipableActivity);
         TypedValue typedValue = new TypedValue();
-        swipableActivity.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        swipableActivity.getTheme().resolveAttribute(android.R.attr.colorBackground, typedValue, true);
         int color = typedValue.data;
         backgroundView.setBackgroundColor(color);
         activityRootLayout.addView(backgroundView, -1, -1);
