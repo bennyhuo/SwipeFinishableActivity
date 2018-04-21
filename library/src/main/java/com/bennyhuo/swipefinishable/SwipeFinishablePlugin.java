@@ -58,7 +58,6 @@ class SwipeFinishablePlugin {
 
     void onCreate(){
         activityRootLayout = new ActivityRootLayout(swipableActivity);
-        addBackgroundView();
     }
 
     private void addBackgroundView(){
@@ -83,6 +82,7 @@ class SwipeFinishablePlugin {
             rootView.removeAllViews();
             rootView.addView(activityRootLayout, -1, -1);
 
+            addBackgroundView();
             for (View child : children) {
                 activityRootLayout.addView(child);
             }
