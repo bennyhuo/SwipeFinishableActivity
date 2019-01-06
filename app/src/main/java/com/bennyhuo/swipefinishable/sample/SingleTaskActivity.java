@@ -11,10 +11,8 @@ import com.bennyhuo.swipefinishable.SwipeFinishable.SwipeFinishableActivity;
 
 /**
  * Created by benny on 9/24/16.
- *
- * You can simply extend BaseSwipeFinishableActivity for convenience.
  */
-public class DetailActivity extends Activity implements SwipeFinishableActivity {
+public class SingleTaskActivity extends Activity implements SwipeFinishableActivity {
     public static final String TAG = "DetailActivity";
 
     public static final String TITLE = "title";
@@ -24,11 +22,11 @@ public class DetailActivity extends Activity implements SwipeFinishableActivity 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         final TextView titleView = (TextView) findViewById(R.id.title);
-        titleView.setText("DetailActivity");
+        titleView.setText("SingleTaskActivity");
         titleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this, SingleInstanceActivity.class);
+                Intent intent = new Intent(SingleTaskActivity.this, DetailActivity.class);
                 SwipeFinishable.INSTANCE.startActivity(intent);
             }
         });

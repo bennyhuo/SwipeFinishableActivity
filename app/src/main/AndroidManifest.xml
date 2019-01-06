@@ -10,16 +10,30 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.bennyhuo.swipefinishable.sample.MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name="com.bennyhuo.swipefinishable.sample.DetailActivity" android:configChanges="orientation" android:theme="@style/AppBgTransparentTheme"/>
+            android:name=".DetailActivity"
+            android:configChanges="orientation"
+            android:theme="@style/AppBgTransparentTheme"/>
+
+        <activity
+            android:name=".SingleTaskActivity"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:theme="@style/AppBgTransparentTheme"/>
+
+        <activity
+            android:name=".SingleInstanceActivity"
+            android:configChanges="orientation"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppBgTransparentTheme"/>
+
         <activity android:name=".DetailActivity2" android:theme="@style/AppTranslucentTheme"/>
     </application>
 
