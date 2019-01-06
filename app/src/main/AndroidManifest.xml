@@ -18,7 +18,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.bennyhuo.swipefinishable.sample.DetailActivity" android:configChanges="orientation" android:theme="@style/AppTranslucentTheme"/>
+        <activity
+            android:name="com.bennyhuo.swipefinishable.sample.DetailActivity" android:configChanges="orientation" android:theme="@style/AppBgTransparentTheme"/>
+        <activity android:name=".DetailActivity2" android:theme="@style/AppTranslucentTheme"/>
     </application>
 
 </manifest>

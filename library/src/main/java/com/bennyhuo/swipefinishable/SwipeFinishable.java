@@ -46,7 +46,7 @@ public final class SwipeFinishable {
     }
 
     public interface SwipeFinishableActivity {
-        void finishThisActivity();
+
     }
 
     public enum State{
@@ -294,6 +294,7 @@ public final class SwipeFinishable {
 
     public void init(Application application) {
         this.application = application;
+        //Reflection.unseal(application);
         addTouchEventInterceptor(interceptor);
         application.registerActivityLifecycleCallbacks(lifecycleCallbacks);
     }

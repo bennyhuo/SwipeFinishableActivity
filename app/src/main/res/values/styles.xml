@@ -11,4 +11,8 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="AppBgTransparentTheme" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 </resources>

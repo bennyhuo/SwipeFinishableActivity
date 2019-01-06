@@ -4,17 +4,15 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
-
-import com.bennyhuo.swipefinishable.SwipeFinishable;
-import com.bennyhuo.swipefinishable.SwipeFinishable.SwipeFinishableActivity;
 
 /**
  * Created by benny on 9/24/16.
  *
- * You can simply extend BaseSwipeFinishableActivity for convenience.
+ *  This Activity use the system built swipe back feature.
  */
-public class DetailActivity extends Activity implements SwipeFinishableActivity {
+public class DetailActivity2 extends Activity {
     public static final String TAG = "DetailActivity";
 
     public static final String TITLE = "title";
@@ -22,7 +20,9 @@ public class DetailActivity extends Activity implements SwipeFinishableActivity 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        requestWindowFeature(Window.FEATURE_SWIPE_TO_DISMISS);
+        overridePendingTransition(0,0);
+        setContentView(R.layout.activity_detail2);
         final TextView titleView = (TextView) findViewById(R.id.title);
 
         titleView.setOnClickListener(new View.OnClickListener() {
@@ -32,10 +32,5 @@ public class DetailActivity extends Activity implements SwipeFinishableActivity 
                 Log.d(TAG, "isHWA: " + titleView.isHardwareAccelerated());
             }
         });
-    }
-
-    @Override
-    public void finish() {
-        SwipeFinishable.INSTANCE.finishCurrentActivity();
     }
 }

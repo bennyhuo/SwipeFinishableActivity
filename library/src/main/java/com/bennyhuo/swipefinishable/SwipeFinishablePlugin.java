@@ -5,6 +5,10 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+
+import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
+import static android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
 
 /**
  * Created by benny on 9/22/16.
@@ -12,12 +16,15 @@ import android.view.ViewGroup;
 class SwipeFinishablePlugin {
     private static final String TAG = "SwipeFinishablePlugin";
 
-    private Activity swipableActivity;
+    private final Activity swipableActivity;
+    private final ActivityEx activityX;
     private ActivityRootLayout activityRootLayout;
 
     SwipeFinishablePlugin(Activity swipableActivity) {
         if(swipableActivity instanceof SwipeFinishable.SwipeFinishableActivity) {
             this.swipableActivity = swipableActivity;
+            activityX = new ActivityEx(swipableActivity);
+            activityX.convertToTranslucent();
         }else{
             throw new UnsupportedOperationException("Activity passed in is not a instance of SwipeActivity.");
         }
@@ -44,12 +51,37 @@ class SwipeFinishablePlugin {
         }
 //        getDecorView().setTranslationX(translationX);
         //getDecorView().offsetLeftAndRight((int) translationX - getDecorView().getLeft());
-        getDecorView().setOffset(translationX);
-        getDecorView().invalidate();
+
+      getDecorView().setOffset(translationX);
+    }
+
+    /**
+     * Translate the window directly.
+     * Modify window param may cause the window looks not complete on api 23 or lower.
+     * @param translationX
+     */
+    @Deprecated
+    void setTranslationXAlt(float translationX){
+        WindowManager.LayoutParams params = swipableActivity.getWindow().getAttributes();
+        params.x = (int) translationX;
+        swipableActivity.getWindow().setAttributes(params);
+
+        int flags = 0;
+        if (params.x == 0) {
+            flags = FLAG_FULLSCREEN;
+        } else {
+            flags = FLAG_LAYOUT_NO_LIMITS;
+        }
+        swipableActivity.getWindow().setFlags(flags, FLAG_FULLSCREEN | FLAG_LAYOUT_NO_LIMITS);
     }
 
     float getTranslationX(){
         return getDecorView().getOffset();
+    }
+
+    @Deprecated
+    float getTranslationXAlt(){
+        return swipableActivity.getWindow().getAttributes().x;
     }
 
     int getWidth(){
@@ -99,6 +131,6 @@ class SwipeFinishablePlugin {
     }
 
     void finishThisActivity(){
-        ((SwipeFinishable.SwipeFinishableActivity) swipableActivity).finishThisActivity();
+        activityX.finish();
     }
 }
